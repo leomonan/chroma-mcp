@@ -1,4 +1,4 @@
-from typing import Dict, List, TypedDict, Union
+from typing import Dict, List, TypedDict, Union, Any
 from enum import Enum
 import chromadb
 from mcp.server.fastmcp import FastMCP
@@ -145,7 +145,7 @@ def get_chroma_client(args=None):
 
 @mcp.tool()
 async def chroma_list_collections(
-    limit: int | None = None,
+    limit: Any | None = None,
     offset: int | None = None
 ) -> List[str]:
     """List all collection names in the Chroma database with pagination support.
@@ -250,7 +250,7 @@ async def chroma_create_collection(
 @mcp.tool()
 async def chroma_peek_collection(
     collection_name: str,
-    limit: int = 5
+    limit: Any = 5
 ) -> Dict:
     """Peek at documents in a Chroma collection.
     
@@ -443,7 +443,7 @@ async def chroma_add_documents(
 async def chroma_query_documents(
     collection_name: str,
     query_texts: List[str],
-    n_results: int = 5,
+    n_results: Any = 5,
     where: Dict | None = None,
     where_document: Dict | None = None,
     include: List[str] = ["documents", "metadatas", "distances"]
@@ -477,7 +477,7 @@ async def chroma_query_documents(
             include=include
         )
     except Exception as e:
-        raise Exception(f"Failed to query documents from collection '{collection_name}': {str(e)}") from e
+        raise Exception(f"Failed to query collection '{collection_name}': {str(e)}") from e
 
 @mcp.tool()
 async def chroma_get_documents(
@@ -486,7 +486,7 @@ async def chroma_get_documents(
     where: Dict | None = None,
     where_document: Dict | None = None,
     include: List[str] = ["documents", "metadatas"],
-    limit: int | None = None,
+    limit: Any | None = None,
     offset: int | None = None
 ) -> Dict:
     """Get documents from a Chroma collection with optional filtering.
